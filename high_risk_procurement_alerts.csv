@@ -1,0 +1,4 @@
+procurement_id,employee_id,vendor_id,price_actual,price_difference,price_variance_pct,vendor_deviation,emp_vendor_density,risk_typology,anomaly_score
+P4217,EMP1158,V216,10934026,5273920,0.9317705357461503,5377903.0,1,Type B: High-Value Macro Price Escalation,-0.0771953622096534
+P4225,EMP1123,V202,8520214,4637366,1.1943207666125484,2932648.0,1,Type B: High-Value Macro Price Escalation,-0.0755923758761664
+P4021,EMP1077,V224,285076,2917499,0.9109853789528739,-7561116.0,2,Type A: Systemic Price Variance,-0.039962154839939146
