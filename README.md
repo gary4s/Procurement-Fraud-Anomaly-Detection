@@ -131,6 +131,16 @@ Based on feature aggregation across the trained K-Means clusters, the dataset na
    * **Characteristics:** Elevated absolute transaction values (~£4.69M) paired with the highest employee-vendor transaction density profiles (1.34).
    * **Audit Focus:** Flagged for concentrated procurement loops, highlighting high-value systemic relationships between specific staff and vendors requiring independent oversight.
 
+## 📤 Operational Output & Investigator Handover
+
+The primary deliverable of this pipeline is a prioritized, risk-scored case backlog optimized for human triage. 
+
+The pipeline automatically filters out normal transactions, maps the unsupervised anomalies to their respective **Risk Typologies**, and exports a `high_risk_procurement_alerts.csv` sorted by the model's absolute anomaly weight. This ensures that internal audit teams can instantly identify the highest-exposure cases without parsing false positives.
+
+### Pipeline Visualization
+Below is the behavioral distribution of the procurement ledger. The pipeline successfully isolates the extreme macro-escalation contract anomalies (Cluster 1) from the high-frequency relationship vectors (Cluster 2).
+<img width="848" height="567" alt="image" src="https://github.com/user-attachments/assets/8a17b1f6-0494-47c1-80a4-4e93418bb8a7" />
+
 ## 🛠️ Tech Stack & Dependencies
 
 * **Language:** Python 3.10+
