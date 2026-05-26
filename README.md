@@ -63,7 +63,83 @@ While built as an unsupervised tool, the pipeline is evaluated using a hidden ba
 * **High Precision Baseline:** Initial strict contamination benchmarks ($1\%$) yielded a **100% Precision Rate**, ensuring that every transaction surfaced was a verified high-profile exception—minimizing "alarm fatigue" for audit and compliance teams.
 * **Dynamic Contamination Tuning:** The implementation demonstrates how adjusting the model's contamination parameters scales recall, capturing subtle, distributed fraud schemes that closely mimic standard business activities.
 
+## Results
+
+```
+--- Calssification Report ---
+              precision    recall  f1-score   support
+
+           0       0.69      1.00      0.82       191
+           1       1.00      0.03      0.07        87
+
+    accuracy                           0.70       278
+   macro avg       0.85      0.52      0.44       278
+weighted avg       0.79      0.70      0.58       278
+```
 ---
+### 🔄 Optimization: Dynamic Contamination Tuning
+
+The initial proof-of-concept utilized a highly restrictive contamination factor ($\alpha = 0.01$). While this baseline achieved a **100% Precision Rate**—ensuring zero false alarms for the audit team—the model suffered from high false negatives, capturing only a fraction of the total embedded risk due to the strict threshold ceiling. 
+
+To transition the pipeline from an extreme outlier detector to a comprehensive risk triage system, the Isolation Forest was retrained with a **10% contamination factor**. This adjustment widened the detection envelope, dynamically scaling the model's recall to surface complex, distributed anomalies that closely mimic legitimate standard business activities.
+```
+--- Updated Confusion Matrix (10% contamination) ---
+[[191   0]
+ [ 59  28]]
+--- Updated classification report ----
+              precision    recall  f1-score   support
+
+           0       0.76      1.00      0.87       191
+           1       1.00      0.32      0.49        87
+
+    accuracy                           0.79       278
+   macro avg       0.88      0.66      0.68       278
+weighted avg       0.84      0.79      0.75       278
+
+```
+
+### 👥 Behavioral Profiling via K-Means Clustering
+
+Once the pipeline identifies high-risk anomalies, it passes the feature matrix to a **K-Means Clustering** algorithm ($k=3$). Rather than forcing investigators to manually parse a flat, undifferentiated list of alerts, K-Means mathematically groups anomalies based on shared behavioral signatures.
+
+This hybrid approach transforms raw statistical outliers into actionable risk typologies. Instead of asking "Is this transaction fraudulent?", compliance and internal audit teams can ask "Which specific risk pattern does this anomaly represent?", allowing organizations to deploy specialized investigative resources more efficiently.
+```
+#rerun the isolation forest to catch more fraud cases, increasing the contamination
+
+--- Breakdown of Fraud flags accross 3 behaviour clusters ---
+fraud_flag          0   1
+behaviour_cluster        
+0                  46  26
+1                  74  24
+2                  71  37
+
+```
+
+### 🔍 Empirical Cluster Definitions & Risk Profiles
+
+Based on feature aggregation across the trained K-Means clusters, the dataset naturally partitions into three distinct operational risk typologies:
+
+1. **Cluster 0: Systemic Price Variance Exception (36% Fraud Density)**
+   * **Characteristics:** Highest average system price variance (21%) and severe expected price differentials (~£550k), with a deeply negative vendor deviation.
+   * **Audit Focus:** Flagged for administrative or systemic pricing misalignment between system contract baselines and actual invoices.
+
+2. **Cluster 1: High-Value Macro Price Escalation (24% Fraud Density)**
+   * **Characteristics:** Highest absolute transaction values (~£8.19M) paired with an extreme positive vendor deviation (~+£2.99M) relative to the supplier's historical baseline.
+   * **Audit Focus:** High-risk financial exposure. Flagged for massive, high-magnitude spend and sudden supplier price inflation.
+
+3. **Cluster 2: High-Value Concentration & Density (34% Fraud Density)**
+   * **Characteristics:** Elevated absolute transaction values (~£4.69M) paired with the highest employee-vendor transaction density profiles (1.34).
+   * **Audit Focus:** Flagged for concentrated procurement loops, highlighting high-value systemic relationships between specific staff and vendors requiring independent oversight.
+
+## 📤 Operational Output & Investigator Handover
+
+The primary deliverable of this pipeline is a prioritized, risk-scored case backlog optimized for human triage. 
+
+The pipeline automatically filters out normal transactions, maps the unsupervised anomalies to their respective **Risk Typologies**, and exports a `high_risk_procurement_alerts.csv` sorted by the model's absolute anomaly weight. This ensures that internal audit teams can instantly identify the highest-exposure cases without parsing false positives.
+
+### Pipeline Visualization
+Below is the behavioral distribution of the procurement ledger. The pipeline successfully isolates the extreme macro-escalation contract anomalies (Cluster 1) from the high-frequency relationship vectors (Cluster 2).
+<img width="848" height="567" alt="image" src="https://github.com/user-attachments/assets/8a17b1f6-0494-47c1-80a4-4e93418bb8a7" />
 
 ## 🛠️ Tech Stack & Dependencies
 
