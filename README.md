@@ -1,35 +1,35 @@
 # Proactive Procurement Fraud Detection using Unsupervised Machine Learning
 
-## 📌 Project Overview
+## Project Overview
 This repository contains an end-to-end unsupervised machine learning pipeline designed to proactively identify anomalous procurement transactions. By leveraging advanced data analytics, this project shifts the traditional counter-fraud paradigm from reactive investigation to proactive, automated risk triage.
 
 In organizational procurement, malicious fraud (e.g., split-invoicing, price-gouging, phantom vendors) and high-cost administrative anomalies are rare compared to the vast volume of legitimate daily transactions. Because historical ground-truth fraud labels are often unavailable or highly confidential, this pipeline utilizes **unsupervised anomaly detection** to surface high-risk exceptions for human audit.
 
-## 📊 Data Source & Context
+## Data Source & Context
 
 ### Procurement and Payroll Fraud Dataset (Synthetic)
 * **Author:** Ramadhan Ridho Arrohman (Kaggle)
 * **Type:** Artificially Generated / Synthetic
 
-#### 🧾 Overview
+#### Overview
 This project utilizes a synthetic dataset explicitly designed for educational, research, and experimental applications within fraud detection frameworks. The data simulates organizational financial workflows, closely mimicking real-world transactional behaviors and risk typologies such as vendor manipulation, inflated invoicing structures, ghost employee profiles, and irregular payment frequency distributions.
 
-> ⚠️ **Important Note:** This dataset does not contain real, classified, or sensitive proprietary data. All records are artificially generated and intended solely for controlled machine learning experimentation, practice, and portfolio development.
+>  **Important Note:** This dataset does not contain real, classified, or sensitive proprietary data. All records are artificially generated and intended solely for controlled machine learning experimentation, practice, and portfolio development.
 
-#### 🎯 Educational Purpose & Alignment
+#### Educational Purpose & Alignment
 In counter-fraud data science, access to production transactional registries is heavily restricted due to privacy laws and operational security. This dataset serves as a high-fidelity proxy to:
 * Safely dissect and isolate complex fraud patterns in procurement structures.
 * Practice unsupervised feature engineering, statistical anomaly detection, and cluster analysis.
 * Prototype end-to-end detection models that can be adapted to authentic organizational schemas under secure environments.
 
-## 🎯 Core Objectives
+## Core Objectives
 * **Procurement Protection:** Targets vulnerability points where organizational funds are disbursed to external suppliers and contractors.
 * **Proactive Threat Triage:** Generates automated anomaly intelligence reports, allowing internal audit and compliance teams to optimize investigative resources.
 * **Loss Prevention:** Flags financial leakage points, ensuring resources are protected and spent efficiently.
 
 ---
 
-## 🏗️ Technical Architecture & Pipeline
+## Technical Architecture & Pipeline
 
 The pipeline processes financial datasets through a four-stage unsupervised workflow:
 
@@ -56,7 +56,7 @@ The pipeline processes financial datasets through a four-stage unsupervised work
 
 ---
 
-## 📊 Evaluation & Methodology
+## Evaluation & Methodology
 
 While built as an unsupervised tool, the pipeline is evaluated using a hidden baseline dataset to understand its precision and operational dynamics:
 
@@ -98,7 +98,7 @@ weighted avg       0.84      0.79      0.75       278
 
 ```
 
-### 👥 Behavioral Profiling via K-Means Clustering
+### Behavioral Profiling via K-Means Clustering
 
 Once the pipeline identifies high-risk anomalies, it passes the feature matrix to a **K-Means Clustering** algorithm ($k=3$). Rather than forcing investigators to manually parse a flat, undifferentiated list of alerts, K-Means mathematically groups anomalies based on shared behavioral signatures.
 
@@ -115,7 +115,7 @@ behaviour_cluster
 
 ```
 
-### 🔍 Empirical Cluster Definitions & Risk Profiles
+### Empirical Cluster Definitions & Risk Profiles
 
 Based on feature aggregation across the trained K-Means clusters, the dataset naturally partitions into three distinct operational risk typologies:
 
@@ -131,7 +131,7 @@ Based on feature aggregation across the trained K-Means clusters, the dataset na
    * **Characteristics:** Elevated absolute transaction values (~£4.69M) paired with the highest employee-vendor transaction density profiles (1.34).
    * **Audit Focus:** Flagged for concentrated procurement loops, highlighting high-value systemic relationships between specific staff and vendors requiring independent oversight.
 
-## 📤 Operational Output & Investigator Handover
+## Operational Output & Investigator Handover
 
 The primary deliverable of this pipeline is a prioritized, risk-scored case backlog optimized for human triage. 
 
@@ -141,7 +141,7 @@ The pipeline automatically filters out normal transactions, maps the unsupervise
 Below is the behavioral distribution of the procurement ledger. The pipeline successfully isolates the extreme macro-escalation contract anomalies (Cluster 1) from the high-frequency relationship vectors (Cluster 2).
 <img width="848" height="567" alt="image" src="https://github.com/user-attachments/assets/8a17b1f6-0494-47c1-80a4-4e93418bb8a7" />
 
-## 🛠️ Tech Stack & Dependencies
+## Tech Stack & Dependencies
 
 * **Language:** Python 3.10+
 * **Data Wrangling:** `pandas`, `numpy`
